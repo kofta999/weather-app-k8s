@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  my.cnf: |
+    [mysqld]
+    # 1. The Big One (Set to 50-60% of total container RAM)
+    innodb_buffer_pool_size = 2G
+
+    # 2. Limit the "Per-Thread" bloat
+    max_connections = 100
+    read_buffer_size = 256K
+    read_rnd_buffer_size = 512K
+    sort_buffer_size = 512K
+    join_buffer_size = 256K
+
+    # 3. Disable Performance Schema (Saves ~400MB immediately)
+    performance_schema = OFF
